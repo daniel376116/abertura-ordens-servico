@@ -24,7 +24,33 @@ public class SetorService {
         return setorRepository.findAll();
     }
 
-    public Optional<Setor> listarSetoresPorId(Integer id) {
+    public Optional<Setor> buscarSetorPorId(Integer id) {
         return setorRepository.findById(id);
+    }
+
+    public Optional<Setor> atualizarSetor(Integer id, Setor setorAtualizado) {
+        Optional<Setor> setorEncontrado = setorRepository.findById(id);
+
+        if (setorEncontrado.isEmpty()) {
+            return Optional.empty();
+        }
+
+        Setor setor = setorEncontrado.get();
+
+        setor.setNome(setorAtualizado.getNome());
+
+        return Optional.of(setorRepository.save(setor));
+        
+    }
+
+    public boolean excluirSetor(Integer id) {
+       
+        if (!setorRepository.existsById(id)) {
+            return false;
+        }
+
+        setorRepository.deleteById(id);
+        return true;
+        
     }
 }
