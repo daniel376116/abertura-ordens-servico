@@ -18,6 +18,7 @@ import br.com.ordensservico.aberturaordensservico.model.Setor;
 import br.com.ordensservico.aberturaordensservico.service.SetorService;
 import jakarta.validation.Valid;
 
+
 @RestController
 @RequestMapping ("/setores")
 public class SetorController {
@@ -53,7 +54,7 @@ public class SetorController {
     }
 
     @PutMapping ("/{id}")
-    public ResponseEntity<Setor> atualizarSetor(@Valid @RequestBody @PathVariable Integer id,Setor setorAtualizado) {
+    public ResponseEntity<Setor> atualizarSetor(@RequestBody @PathVariable @Valid Integer id,Setor setorAtualizado) {
         Optional<Setor> setorAtual = setorService.atualizarSetor(id, setorAtualizado);
 
         if (setorAtual.isPresent()) {

@@ -3,7 +3,7 @@ package br.com.ordensservico.aberturaordensservico.service;
 import java.util.List;
 import java.util.Optional;
 
-import org.springframework.stereotype.Service;
+import org.springframework.stereotype.Service; 
 import br.com.ordensservico.aberturaordensservico.model.Equipamento;
 import br.com.ordensservico.aberturaordensservico.repository.EquipamentoRepository;
 
@@ -16,8 +16,8 @@ public class EquipamentoService {
         this.equipamentoRepository = equipamentoRepository;
     }
 
-    public Equipamento cadastrarEquipamento(Equipamento equipamento) {
-        return equipamentoRepository.save(equipamento);
+    public Optional<Equipamento> cadastrarEquipamento(Equipamento equipamento) {
+        return Optional.of(equipamentoRepository.save(equipamento));
     }
 
     public List<Equipamento> listarEquipamentos() {

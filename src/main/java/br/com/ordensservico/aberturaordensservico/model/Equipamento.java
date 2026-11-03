@@ -25,7 +25,7 @@ public class Equipamento {
     private String numeroPatrimonio;
 
     @ManyToOne 
-    @JoinColumn (name = "setor_id")
+    @JoinColumn (name = "setor_id", nullable = false)
     @NotNull (message = "O id do setor não pode ser nulo")
     private Setor setor;
 
