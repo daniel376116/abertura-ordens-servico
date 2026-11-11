@@ -30,8 +30,8 @@ public class EquipamentoController {
     }
 
     @PostMapping
-    public ResponseEntity<Optional<Equipamento>> cadastrarEquipamento(@Valid @RequestBody EquipamentoRequest equipamento) {
-        Optional<Equipamento> equipamentoCadastrado = equipamentoService.cadastrarEquipamento(equipamento);
+    public ResponseEntity<Optional<Equipamento>> cadastrarEquipamento(@Valid @RequestBody EquipamentoRequest equipamentoRequest) {
+        Optional<Equipamento> equipamentoCadastrado = equipamentoService.cadastrarEquipamento(equipamentoRequest);
         return ResponseEntity.status(HttpStatus.CREATED).body(equipamentoCadastrado);
     }
 
