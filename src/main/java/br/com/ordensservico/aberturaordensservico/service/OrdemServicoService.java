@@ -4,8 +4,11 @@ import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Optional;
 
+import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
+import org.springframework.web.server.ResponseStatusException;
 
+import br.com.ordensservico.aberturaordensservico.dto.EncerramentoOrdemServicoRequest;
 import br.com.ordensservico.aberturaordensservico.dto.OrdemServicoRequest;
 import br.com.ordensservico.aberturaordensservico.model.Equipamento;
 import br.com.ordensservico.aberturaordensservico.model.OrdemServico;
@@ -42,6 +45,29 @@ public class OrdemServicoService {
 
     public Optional<OrdemServico> buscarOrdemServicoPorId(Integer id) {
         return ordemServicoRepository.findById(id);
+    }
+
+    public Optional<OrdemServico> encerrarOrdemServico (Integer id, EncerramentoOrdemServicoRequest dados) {
+
+        Optional<OrdemServico> ordemServicoExists = ordemServicoRepository.findById(id);
+        
+        if (ordemServicoExists.isEmpty()) {
+            return Optional.empty();
+        }
+
+        if (ordemServicoExists.get().getDataEncerramento() != null) {
+            throw new ResponseStatusException(HttpStatus.CONFLICT, "A ordem de serviço já foi encerrada");
+        }
+
+        OrdemServico ordemServico = ordemServicoExists.get();
+        ordemServico.setDataEncerramento(LocalDateTime.now());
+        ordemServico.setSolucao(dados.getSolucao());
+
+        return Optional.of(ordemServicoRepository.save(ordemServico));
+    }
+
+    public List<OrdemServico> listarOrdensServicoPendentes() {
+        return ordemServicoRepository.findByDataEncerramentoIsNull();
     }
 
 }
